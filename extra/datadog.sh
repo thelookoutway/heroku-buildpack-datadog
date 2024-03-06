@@ -289,6 +289,12 @@ if [ -e "$PRERUN_SCRIPT" ]; then
   source "$PRERUN_SCRIPT"
 fi
 
+# Disable the addition of dyno tags
+if [ "$DD_DYNO_TAGS_ENABLED" == "false" ]; then
+  echo "DD_DYNO_TAGS_ENABLED is set to false. Dyno tags will be unset ($DYNO_TAGS)."
+  DYNO_TAGS=""
+fi
+
 # Convert comma delimited tags from env vars to yaml
 if [ -n "$DD_TAGS" ]; then
   DD_TAGS_NORMALIZED="$(sed "s/,[ ]\?/\ /g"  <<< "$DD_TAGS")"
